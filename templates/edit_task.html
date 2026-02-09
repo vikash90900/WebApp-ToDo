@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if mode == 'edit' %}Edit Task{% else %}Add Task{% endif %} - Flask To-Do
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <h2 class="mb-3 text-center">
+            {% if mode == 'edit' %}Edit Task{% else %}Add New Task{% endif %}
+        </h2>
+
+        <form method="post" novalidate>
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                {{ form.title.label(class="form-label") }}
+                {{ form.title(class="form-control", placeholder="Short task title") }}
+                {% for error in form.title.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.description.label(class="form-label") }}
+                {{ form.description(class="form-control", rows="4", placeholder="Optional: add more details") }}
+                {% for error in form.description.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.priority.label(class="form-label") }}
+                {{ form.priority(class="form-select") }}
+                {% for error in form.priority.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.due_date.label(class="form-label") }}
+                {{ form.due_date(class="form-control", placeholder="YYYY-MM-DD") }}
+                <div class="form-text">
+                    Leave empty if the task has no specific due date.
+                </div>
+                {% for error in form.due_date.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            {% if mode == 'edit' %}
+            <div class="form-check mb-3">
+                {{ form.is_completed(class="form-check-input") }}
+                {{ form.is_completed.label(class="form-check-label") }}
+            </div>
+            {% endif %}
+
+            <div class="d-flex justify-content-between">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                {{ form.submit(class="btn btn-success") }}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

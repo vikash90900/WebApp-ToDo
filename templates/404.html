@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}404 Not Found{% endblock %}
+
+{% block content %}
+<div class="text-center my-5">
+    <h1 class="display-4">404</h1>
+    <p class="lead">The page you are looking for could not be found.</p>
+    <p class="text-muted">
+        It might have been moved, deleted, or you may have typed the wrong URL.
+    </p>
+    <a href="{{ url_for('dashboard') if g.user else url_for('login') }}" class="btn btn-primary">
+        Go Home
+    </a>
+</div>
+{% endblock %}
+

@@ -1,0 +1,30 @@
+runtime: python312
+
+entrypoint: gunicorn -b :$PORT app:app
+
+env_variables:
+  # In production, set a strong secret key here.
+  SECRET_KEY: "change-this-in-production"
+
+handlers:
+  - url: /static
+    static_dir: static
+
+  - url: /.*
+    script: auto
+
+# Deployment notes (for Google Cloud App Engine Standard):
+#
+# 1. Make sure you have the Google Cloud SDK installed and initialized:
+#      gcloud init
+#      gcloud auth login
+#      gcloud config set project YOUR_PROJECT_ID
+#
+# 2. From inside the todo_app/ directory (where this app.yaml lives), deploy with:
+#      gcloud app deploy
+#
+# 3. After deployment, open the app in a browser:
+#      gcloud app browse
+#
+# 4. The requirements.txt file is automatically installed by App Engine at deploy time.
+#
